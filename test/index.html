@@ -9,25 +9,144 @@
   <div id="mocha"></div>
   <script src="lib/mocha/mocha.js"></script>
   <script>mocha.setup('bdd')</script>
-
-  <!-- assertion framework -->
-  
   <script src="lib/chai.js"></script>
-    
-      
-  <script>expect = chai.expect</script>
+  <script src="../temp/scripts/date.js"></script>
       
   <script>
-  // replace this by your own specs
+    expect = chai.expect
+
+    chai.use (function (_chai, utils) {
+      utils.overwriteMethod(chai.Assertion.prototype, 'equal', function (_super) {
+        return function (d) {
+          var obj = utils.flag(this, 'object');
+          if (obj instanceof Date) {
+            new chai.Assertion(obj.toString()).to.equal(d.toString());
+            } else {
+            _super.apply(this, arguments);
+          }
+        }
+      });
+    });
+
+    // Start date is now
+    var T = Date.Util.Interval;
+    var start_date = new Date(new Date().getTime() - 4*T.Day);
+    var start_time = start_date.getTime();
+
+    // Simpler parse function
+    var parse = function (s) { return Date.parse(s, start_date); };
+
+    // Date objects relative to the start date
+    var today      = new Date(start_time);
+    var tomorrow   = new Date(start_time + T.Day);
+    var yesterday  = new Date(start_time - T.Day);
+    var next_year  = new Date(start_time); next_year.setYear(start_date.getYear()+1);
+    var last_year  = new Date(start_time); last_year.setYear(start_date.getYear()-1);
+    var next_month = new Date(start_time); next_month.setMonth(start_date.getMonth()+1);
+    var last_month = new Date(start_time); last_month.setMonth(start_date.getMonth()-1);
+    var next_week = new Date(start_time + T.Week);
+    var last_week = new Date(start_time - T.Week);
+  </script>
+
+  <script>
   (function() {
-    describe('Give it some context', function() {
-      describe('maybe a bit more context here', function() {
 
-        it('should run here few assertions', function() {
+    describe('Date parsing', function() {
 
+      describe('Simple dates', function() {
+
+        it('should parse "today"', function() {
+          expect    (parse("today"))
+          .to.equal (today);
+        });
+
+        it('should parse "tomorrow"', function() {
+          expect    (parse("tomorrow"))
+          .to.equal (tomorrow);
+        });
+        
+        it('should parse "yesterday"', function() {
+          expect    (parse("yesterday"))
+          .to.equal (yesterday);
         });
 
       });
+
+      describe('Next/Previous', function() {
+        it('should parse "next year"', function() {
+          expect    (parse("next year"))
+          .to.equal (next_year);
+        });
+
+        it('should parse "last year"', function() {
+          expect    (parse("last year"))
+          .to.equal (last_year);
+        });
+
+        it('should parse "next month"', function() {
+          expect    (parse("next month"))
+          .to.equal (next_month);
+        });
+
+        it('should parse "last month"', function() {
+          expect    (parse("last month"))
+          .to.equal (last_month);
+        });
+
+        it('should parse "next week"', function() {
+          expect    (parse("next week"))
+          .to.equal (next_week);
+        });
+
+        it('should parse "last week"', function() {
+          expect    (parse("last week"))
+          .to.equal (last_week);
+        });
+
+        // Create an expect rule for each day of the week, in full or abbrev form
+        for (var day = 0; day < 7; day++) {
+          var current_day = start_date.getDay();
+          var next_date = new Date(start_time + (day-current_day)*T.Day); // Move to correct day
+          if (day <= current_day) next_date.setTime(next_date.getTime() + 7*T.Day); // Add one week if necessary
+
+          var expect_parse = function(n, d) {
+            it('should parse "' + text_to_parse + '"', function() {
+              expect (parse(n)).to.equal (d);
+            });
+          };
+
+          var text_to_parse;
+
+          text_to_parse = "next " + Date.Util.Day.Full[day];
+          expect_parse (text_to_parse, next_date);
+
+          text_to_parse = "next " + Date.Util.Day.Abbrev[day];
+          expect_parse (text_to_parse, next_date);
+        }
+      });
+
+      describe ('Time expressions', function() {
+        it('should parse 24-hour format times', function() {
+          expect (parse("today at 17:32")).to.satisfy (function (d) {
+            return d.getMonth() == start_date.getMonth() && d.getYear() == start_date.getYear() &&
+                   d.getMinutes() == 32 && d.getHours() == 17;
+          });
+        });
+
+        it('should parse 12-hour format times (PM)', function() {
+          expect (parse("tomorrow at 7:32PM")).to.satisfy (function (d) {
+            return d.getMonth() == start_date.getMonth() && d.getYear() == start_date.getYear() &&
+                   d.getMinutes() == 32 && d.getHours() == 19;
+          });
+        });
+
+        it('should parse 12-hour format times (AM)', function() {
+          expect (parse("yesterday at 7:32A")).to.satisfy (function (d) {
+            return d.getMonth() == start_date.getMonth() && d.getYear() == start_date.getYear() &&
+                   d.getMinutes() == 32 && d.getHours() == 7;
+          });
+        });
+      })
     });
   })();
   </script>
