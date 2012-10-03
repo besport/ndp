@@ -46,6 +46,12 @@
     var last_month = new Date(start_time); last_month.setMonth(start_date.getMonth()-1);
     var next_week = new Date(start_time + T.Week);
     var last_week = new Date(start_time - T.Week);
+
+    var next_monday_at_noon = new Date(start_time + (1-start_date.getDay())*T.Day);
+    next_monday_at_noon.setHours(12);
+    next_monday_at_noon.setMinutes(0);
+    next_monday_at_noon.setSeconds(0);
+    if (1 <= start_date.getDay()) next_monday_at_noon.setTime(next_monday_at_noon.getTime() + 7*T.Day);
   </script>
 
   <script>
@@ -168,6 +174,13 @@
           });
         });
       })
+
+      describe ('Other sample tests', function() {
+        it('should parse "We\'re going to make a big tennis game next monday at noon, who\'s coming?"', function() {
+          expect    (parse("We're going to make a big tennis game next monday at noon, who's coming?"))
+          .to.equal (next_monday_at_noon);
+        });
+      });
     });
   })();
   </script>
