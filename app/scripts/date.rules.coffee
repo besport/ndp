@@ -83,21 +83,23 @@ class NextLastDayRule extends Rule
     r[if v < 0 then "last_week_day" else "next_week_day"] = tokens[1].id()
     return r
 
-class TimeAtRule extends Rule
+class NumberAtRule extends Rule
   constructor: -> super [AtToken, Number2Token]
   value: (tokens) -> { hours: tokens[1].value(), minutes: 0, seconds: 0 }
 
-class TimeAtPRule extends Rule
-  constructor: -> super [AtToken, Number2PToken]
-  value: (tokens) -> { hours: tokens[1].value(), minutes: 0, seconds: 0, pmam: tokens[1].pmam() }
+class NumberPRule extends SingleTokenRule
+  constructor: -> super Number2PToken
+  value: (tokens) -> { hours: tokens[0].value(), minutes: 0, seconds: 0, pmam: tokens[0].pmam() }
 
 class TimeRule extends SingleTokenRule
   constructor: -> super TimeToken
-  value: (tokens) -> { hours: tokens[1].hours(), minutes: tokens[1].minutes(), seconds: 0 }
+  value: (tokens) -> { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0 }
 
 class TimePRule extends SingleTokenRule
   constructor: -> super TimePToken
-  value: (tokens) -> { hours: tokens[1].hours(), minutes: tokens[1].minutes(), seconds: 0, pmam: tokens[1].pmam() }
+  value: (tokens) ->
+    console.log tokens
+    { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0, pmam: tokens[0].pmam() }
 
 ##################################
 # All the rules used for parsing #
@@ -113,8 +115,9 @@ Rules = [
   NextLastYearRule,
   NextLastDayRule,
   NextLastWeekRule,
-  TimeAtRule,
-  TimeAtPRule,
+  NumberAtRule,
+  NumberPRule,
+  NumberPRule,
   TimeRule,
   TimePRule,
   LunchRule,

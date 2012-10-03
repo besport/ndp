@@ -115,7 +115,7 @@ class Number2Token extends AbstractToken
   value: -> parseInt @match[0]
 
 class Number2PToken extends AbstractToken
-  constructor: -> super /// ([0-9]{1,2})(P|A)M? ///
+  constructor: -> super /// ([0-9]{1,2})(p|a)m? ///
   value: -> parseInt @match[1]
   pmam: -> @match[2]
 
@@ -125,7 +125,7 @@ class TimeToken extends AbstractToken
   minutes: -> parseInt @match[2]
 
 class TimePToken extends AbstractToken
-  constructor: -> super /// [0-9]{1,2}:[0-9]{2}(p|a)m? ///
+  constructor: -> super /// ([0-9]{1,2}):([0-9]{2})(p|a)m? ///
   hours: -> parseInt @match[1]
   minutes: -> parseInt @match[2]
   pmam: -> @match[3]
