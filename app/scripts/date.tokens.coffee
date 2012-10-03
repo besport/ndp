@@ -110,8 +110,22 @@ class NextLastToken extends AbstractToken
 # Numbers #
 ###########
 
+class DateYYToken extends AbstractToken
+  constructor: -> super /// ([0-9]{1,2})[./]([0-9]{1,2})[./]([0-9]{2}) ///
+  use: (str) -> (super str) and @day() <= 31 and @day() > 0 and @month() <= 11 and @month() >= 0
+  month: -> (parseInt @match[1])-1
+  day: -> parseInt @match[2]
+  year: -> 2000 + parseInt @match[3]
+
+class DateYYYYToken extends AbstractToken
+  constructor: -> super /// ([0-9]{1,2})[./]([0-9]{1,2})[./]([0-9]{4}) ///
+  use: (str) -> (super str) and @day() <= 31 and @day() > 0 and @month() <= 11 and @month() >= 0
+  month: -> (parseInt @match[1])-1
+  day: -> parseInt @match[2]
+  year: -> parseInt @match[3]
+
 class Number2Token extends AbstractToken
-  constructor: -> super /// [0-9]{,2} ///
+  constructor: -> super /// [0-9]{1,2} ///
   value: -> parseInt @match[0]
 
 class Number2PToken extends AbstractToken
@@ -160,5 +174,7 @@ Tokens = [
   Number2PToken,
   TimeToken,
   TimePToken,
-  Number4Token
+  Number4Token,
+  DateYYToken,
+  DateYYYYToken
 ]

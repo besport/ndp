@@ -42,6 +42,9 @@ apply = (info, date=new Date) ->
   if "year" of info
     date.setYear info.year
 
+  if "day" of info
+    date.setDate info.day
+
   # Set next week day
   if "next_week_day" of info
     current_day = date.getDay()
@@ -109,6 +112,9 @@ Date.parse = (str, date) ->
     p = pick tokens
     rules.push p if p isnt null
 
+  # Return null if nothing found
+  return null if rules.length == 0
+
   # Copy input date (or create it if null)
   date = if date then new Date date else new Date
 
@@ -153,6 +159,30 @@ class NextLastRule extends Rule
 #################
 # Grammar rules #
 #################
+
+class WeekdayMonthDayYearRule extends Rule
+  constructor: -> super [DayNameToken, MonthNameToken, Number2Token, Number4Token]
+  value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value(), year: tokens[3].value() }
+
+class MonthDayYearRule extends Rule
+  constructor: -> super [MonthNameToken, Number2Token, Number4Token]
+  value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value(), year: tokens[2].value() }
+
+class WeekdayMonthDayRule extends Rule
+  constructor: -> super [DayNameToken, MonthNameToken, Number2Token]
+  value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value() }
+
+class MonthDayRule extends Rule
+  constructor: -> super [MonthNameToken, Number2Token]
+  value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value() }
+
+class DateYYTokenRule extends SingleTokenRule
+  constructor: -> super DateYYToken
+  value: (tokens) -> { year: tokens[0].year(), day: tokens[0].day(), month: tokens[0].month() }
+
+class DateYYYYTokenRule extends SingleTokenRule
+  constructor: -> super DateYYYYToken
+  value: (tokens) -> { year: tokens[0].year(), day: tokens[0].day(), month: tokens[0].month() }
 
 class DayTokenRule extends SingleTokenRule
   constructor: -> super DayNameToken
@@ -218,7 +248,6 @@ class TimeRule extends SingleTokenRule
 class TimePRule extends SingleTokenRule
   constructor: -> super TimePToken
   value: (tokens) ->
-    console.log tokens
     { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0, pmam: tokens[0].pmam() }
 
 ##################################
@@ -242,7 +271,13 @@ Rules = [
   TimePRule,
   LunchRule,
   NoonRule,
-  MidnightRule
+  MidnightRule,
+  DateYYTokenRule,
+  DateYYYYTokenRule,
+  MonthDayYearRule,
+  WeekdayMonthDayYearRule,
+  MonthDayRule,
+  WeekdayMonthDayRule
 ]
 
 # Date.coffee
@@ -357,8 +392,22 @@ class NextLastToken extends AbstractToken
 # Numbers #
 ###########
 
+class DateYYToken extends AbstractToken
+  constructor: -> super /// ([0-9]{1,2})[./]([0-9]{1,2})[./]([0-9]{2}) ///
+  use: (str) -> (super str) and @day() <= 31 and @day() > 0 and @month() <= 11 and @month() >= 0
+  month: -> (parseInt @match[1])-1
+  day: -> parseInt @match[2]
+  year: -> 2000 + parseInt @match[3]
+
+class DateYYYYToken extends AbstractToken
+  constructor: -> super /// ([0-9]{1,2})[./]([0-9]{1,2})[./]([0-9]{4}) ///
+  use: (str) -> (super str) and @day() <= 31 and @day() > 0 and @month() <= 11 and @month() >= 0
+  month: -> (parseInt @match[1])-1
+  day: -> parseInt @match[2]
+  year: -> parseInt @match[3]
+
 class Number2Token extends AbstractToken
-  constructor: -> super /// [0-9]{,2} ///
+  constructor: -> super /// [0-9]{1,2} ///
   value: -> parseInt @match[0]
 
 class Number2PToken extends AbstractToken
@@ -407,5 +456,7 @@ Tokens = [
   Number2PToken,
   TimeToken,
   TimePToken,
-  Number4Token
+  Number4Token,
+  DateYYToken,
+  DateYYYYToken
 ]

@@ -42,6 +42,9 @@ apply = (info, date=new Date) ->
   if "year" of info
     date.setYear info.year
 
+  if "day" of info
+    date.setDate info.day
+
   # Set next week day
   if "next_week_day" of info
     current_day = date.getDay()
@@ -108,6 +111,9 @@ Date.parse = (str, date) ->
   while tokens.length
     p = pick tokens
     rules.push p if p isnt null
+
+  # Return null if nothing found
+  return null if rules.length == 0
 
   # Copy input date (or create it if null)
   date = if date then new Date date else new Date

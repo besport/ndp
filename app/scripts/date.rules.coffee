@@ -34,6 +34,30 @@ class NextLastRule extends Rule
 # Grammar rules #
 #################
 
+class WeekdayMonthDayYearRule extends Rule
+  constructor: -> super [DayNameToken, MonthNameToken, Number2Token, Number4Token]
+  value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value(), year: tokens[3].value() }
+
+class MonthDayYearRule extends Rule
+  constructor: -> super [MonthNameToken, Number2Token, Number4Token]
+  value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value(), year: tokens[2].value() }
+
+class WeekdayMonthDayRule extends Rule
+  constructor: -> super [DayNameToken, MonthNameToken, Number2Token]
+  value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value() }
+
+class MonthDayRule extends Rule
+  constructor: -> super [MonthNameToken, Number2Token]
+  value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value() }
+
+class DateYYTokenRule extends SingleTokenRule
+  constructor: -> super DateYYToken
+  value: (tokens) -> { year: tokens[0].year(), day: tokens[0].day(), month: tokens[0].month() }
+
+class DateYYYYTokenRule extends SingleTokenRule
+  constructor: -> super DateYYYYToken
+  value: (tokens) -> { year: tokens[0].year(), day: tokens[0].day(), month: tokens[0].month() }
+
 class DayTokenRule extends SingleTokenRule
   constructor: -> super DayNameToken
   value: (tokens) -> { next_week_day: tokens[0].id() }
@@ -98,7 +122,6 @@ class TimeRule extends SingleTokenRule
 class TimePRule extends SingleTokenRule
   constructor: -> super TimePToken
   value: (tokens) ->
-    console.log tokens
     { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0, pmam: tokens[0].pmam() }
 
 ##################################
@@ -122,5 +145,11 @@ Rules = [
   TimePRule,
   LunchRule,
   NoonRule,
-  MidnightRule
+  MidnightRule,
+  DateYYTokenRule,
+  DateYYYYTokenRule,
+  MonthDayYearRule,
+  WeekdayMonthDayYearRule,
+  MonthDayRule,
+  WeekdayMonthDayRule
 ]

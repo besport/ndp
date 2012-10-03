@@ -173,7 +173,39 @@
                    d.getMinutes() == 32 && d.getHours() == 7;
           });
         });
-      })
+      });
+
+      describe ('Date expressions', function() {
+        it('should parse "4/16/2015"', function() {
+          expect      (parse("4/16/2015"))
+          .to.satisfy (function(d) { return d.getDate() == 16 && d.getMonth() == 3 && d.getFullYear() == 2015; });
+        });
+
+        it('should parse "4.16.2015"', function() {
+          expect      (parse("4.16.2015"))
+          .to.satisfy (function(d) { return d.getDate() == 16 && d.getMonth() == 3 && d.getFullYear() == 2015; });
+        });
+
+        it('should parse "October 13"', function() {
+          expect      (parse("October 13"))
+          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9; });
+        });
+
+        it('should parse "Monday, October 13"', function() {
+          expect      (parse("Monday, October 13"))
+          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9; });
+        });
+
+        it('should parse "October 13, 2015"', function() {
+          expect      (parse("October 13, 2015"))
+          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9 && d.getFullYear() == 2015; });
+        });
+
+        it('should parse "Monday, October 13, 2015"', function() {
+          expect      (parse("Monday, October 13, 2015"))
+          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9 && d.getFullYear() == 2015; });
+        });
+      });
 
       describe ('Other sample tests', function() {
         it('should parse "We\'re going to make a big tennis game next monday at noon, who\'s coming?"', function() {
