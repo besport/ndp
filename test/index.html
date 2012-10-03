@@ -40,8 +40,8 @@
     var today      = new Date(start_time);
     var tomorrow   = new Date(start_time + T.Day);
     var yesterday  = new Date(start_time - T.Day);
-    var next_year  = new Date(start_time); next_year.setYear(start_date.getYear()+1);
-    var last_year  = new Date(start_time); last_year.setYear(start_date.getYear()-1);
+    var next_year  = new Date(start_time); next_year.setYear(start_date.getFullYear()+1);
+    var last_year  = new Date(start_time); last_year.setYear(start_date.getFullYear()-1);
     var next_month = new Date(start_time); next_month.setMonth(start_date.getMonth()+1);
     var last_month = new Date(start_time); last_month.setMonth(start_date.getMonth()-1);
     var next_week = new Date(start_time + T.Week);
@@ -72,7 +72,19 @@
 
       });
 
-      describe('Next/Previous', function() {
+      describe('Simple times', function() {
+        it('should parse "noon"', function() {
+          expect   (parse("noon"))
+          .to.satisfy (function(d) { return d.getHours() == 12 && d.getMinutes() == 0; });
+        });
+
+        it('should parse "midnight"', function() {
+          expect   (parse("midnight"))
+          .to.satisfy (function(d) { return d.getHours() == 0 && d.getMinutes() == 0; });
+        });
+      });
+
+      describe('Next/Previous (Year, Month, Week)', function() {
         it('should parse "next year"', function() {
           expect    (parse("next year"))
           .to.equal (next_year);
@@ -102,6 +114,9 @@
           expect    (parse("last week"))
           .to.equal (last_week);
         });
+      });
+
+      describe ('Next/Previous (Day)', function() {
 
         // Create an expect rule for each day of the week, in full or abbrev form
         for (var day = 0; day < 7; day++) {
@@ -122,27 +137,33 @@
 
           text_to_parse = "next " + Date.Util.Day.Abbrev[day];
           expect_parse (text_to_parse, next_date);
+
+          text_to_parse = Date.Util.Day.Full[day];
+          expect_parse (text_to_parse, next_date);
+
+          text_to_parse = Date.Util.Day.Abbrev[day];
+          expect_parse (text_to_parse, next_date);
         }
       });
 
       describe ('Time expressions', function() {
         it('should parse 24-hour format times', function() {
           expect (parse("today at 17:32")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getYear() == start_date.getYear() &&
+            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
                    d.getMinutes() == 32 && d.getHours() == 17;
           });
         });
 
         it('should parse 12-hour format times (PM)', function() {
           expect (parse("tomorrow at 7:32PM")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getYear() == start_date.getYear() &&
+            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
                    d.getMinutes() == 32 && d.getHours() == 19;
           });
         });
 
         it('should parse 12-hour format times (AM)', function() {
           expect (parse("yesterday at 7:32A")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getYear() == start_date.getYear() &&
+            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
                    d.getMinutes() == 32 && d.getHours() == 7;
           });
         });

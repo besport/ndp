@@ -15,14 +15,20 @@ module.exports = function( grunt ) {
       dir: 'app/components'
     },
 
+    concat: {
+      dist: {
+        src: 'app/scripts/date.*.coffee',
+        dest: 'temp/scripts/date.coffee'
+      }
+    },
+
     // Coffee to JS compilation
     coffee: {
       compile: {
         files: {
-          'temp/scripts/*.js': 'app/scripts/**/*.coffee' 
+          'temp/scripts/date.js': 'temp/scripts/date.coffee' 
         },
         options: {
-          basePath: 'app/scripts'
         }
       }
     },
@@ -53,8 +59,12 @@ module.exports = function( grunt ) {
 
     // default watch configuration
     watch: {
+      concat: {
+        files: 'app/scripts/date.*.coffee',
+        tasks: 'concat'
+      },
       coffee: {
-        files: 'app/scripts/**/*.coffee',
+        files: ['app/scripts/**/*.coffee', 'temp/scripts/date.coffee'],
         tasks: 'coffee reload'
       },
       compass: {
@@ -170,12 +180,6 @@ module.exports = function( grunt ) {
       baseUrl: './scripts',
       wrap: true,
       name: 'main'
-    },
-
-    // While Yeoman handles concat/min when using
-    // usemin blocks, you can still use them manually
-    concat: {
-      dist: ''
     },
 
     min: {
