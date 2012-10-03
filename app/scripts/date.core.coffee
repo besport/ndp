@@ -1,6 +1,12 @@
 # Date.coffee
 # (c) BeSport 2012, François-Xavier Thomas
 
+# These don't actually do anything, but have to be concatenated to the main
+# file. It's easier to split the code that way.
+
+#include ./date.tokens.coffee
+#include ./date.rules.coffee
+
 ##################
 # Useful methods #
 ##################
@@ -91,7 +97,7 @@ Date.parse = (str, date) ->
   str = str.toLowerCase()
 
   # Transform input into a list of words
-  word_list = (a for a in str.split /\s*,\s*|\s*;\s*|\s*\.\s+|\s+/ when a.length > 0)
+  word_list = (a for a in str.split /\s*[,;!?]\s*|\s*\.\s+|\s+/ when a.length > 0)
 
   # Tokenize input
   tokens = (to_token(a) for a in word_list)

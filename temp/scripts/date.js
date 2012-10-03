@@ -82,7 +82,7 @@
     str = str.toLowerCase();
     word_list = (function() {
       var _i, _len, _ref, _results;
-      _ref = str.split(/\s*,\s*|\s*;\s*|\s*\.\s+|\s+/);
+      _ref = str.split(/\s*[,;!?]\s*|\s*\.\s+|\s+/);
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         a = _ref[_i];

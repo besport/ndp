@@ -18,7 +18,7 @@ module.exports = function( grunt ) {
     concat: {
       dist: {
         src: 'app/scripts/date.*.coffee',
-        dest: 'temp/scripts/date.coffee'
+        dest: 'app/scripts/date.coffee'
       }
     },
 
@@ -26,7 +26,7 @@ module.exports = function( grunt ) {
     coffee: {
       compile: {
         files: {
-          'temp/scripts/date.js': 'temp/scripts/date.coffee' 
+          'temp/scripts/date.js': 'app/scripts/date.coffee' 
         },
         options: {
         }

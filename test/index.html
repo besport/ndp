@@ -180,6 +180,11 @@
           expect    (parse("We're going to make a big tennis game next monday at noon, who's coming?"))
           .to.equal (next_monday_at_noon);
         });
+
+        it('should parse "Let\'s have lunch next monday!"', function() {
+          expect    (parse("Let's have lunch next monday!"))
+          .to.equal (next_monday_at_noon);
+        });
       });
     });
   })();
