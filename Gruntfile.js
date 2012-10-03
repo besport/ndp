@@ -9,6 +9,7 @@ module.exports = function( grunt ) {
 
     // Project configuration
     // ---------------------
+    //
 
     // specify an alternate install location for Bower
     bower: {
@@ -16,7 +17,7 @@ module.exports = function( grunt ) {
     },
 
     concat: {
-      dist: {
+      coffee: {
         src: 'app/scripts/date.*.coffee',
         dest: 'app/scripts/date.coffee'
       }
@@ -26,7 +27,14 @@ module.exports = function( grunt ) {
     coffee: {
       compile: {
         files: {
-          'temp/scripts/date.js': 'app/scripts/date.coffee' 
+          'temp/scripts/date.js': 'app/scripts/date.coffee',
+        },
+        options: {
+        }
+      },
+      build: {
+        files: {
+          'date.js': 'app/scripts/date.coffee'
         },
         options: {
         }
