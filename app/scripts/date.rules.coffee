@@ -119,6 +119,18 @@ class TimeRule extends SingleTokenRule
   constructor: -> super TimeToken
   value: (tokens) -> { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0 }
 
+class TimeSpacePRule extends Rule
+  constructor: -> super [TimeToken, PMAMToken]
+  value: (tokens) -> { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0, pmam: tokens[1].value() }
+
+class NumberTimeSpacePRule extends Rule
+  constructor: -> super [Number2Token, PMAMToken]
+  value: (tokens) -> { hours: tokens[0].value(), minutes: 0, seconds: 0, pmam: tokens[1].value() }
+
+class AtNumberTimeSpacePRule extends Rule
+  constructor: -> super [AtToken, Number2Token, PMAMToken]
+  value: (tokens) -> { hours: tokens[1].value(), minutes: 0, seconds: 0, pmam: tokens[2].value() }
+
 class TimePRule extends SingleTokenRule
   constructor: -> super TimePToken
   value: (tokens) ->
@@ -151,5 +163,8 @@ Rules = [
   MonthDayYearRule,
   WeekdayMonthDayYearRule,
   MonthDayRule,
-  WeekdayMonthDayRule
+  WeekdayMonthDayRule,
+  TimeSpacePRule,
+  NumberTimeSpacePRule,
+  AtNumberTimeSpacePRule
 ]

@@ -26,7 +26,7 @@ pick = (token_list) ->
 apply = (info, date=new Date) ->
   # Apply static time information
   if "hours" of info
-    date.setHours info.hours + (if "pmam" of info and info.pmam == "p" then 12 else 0)
+    date.setHours info.hours + (if "pmam" of info and (info.pmam == "p" or info.pmam == "pm") and info.hours < 12 then 12 else 0)
 
   # Set minutes
   if "minutes" of info
@@ -245,6 +245,18 @@ class TimeRule extends SingleTokenRule
   constructor: -> super TimeToken
   value: (tokens) -> { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0 }
 
+class TimeSpacePRule extends Rule
+  constructor: -> super [TimeToken, PMAMToken]
+  value: (tokens) -> { hours: tokens[0].hours(), minutes: tokens[0].minutes(), seconds: 0, pmam: tokens[1].value() }
+
+class NumberTimeSpacePRule extends Rule
+  constructor: -> super [Number2Token, PMAMToken]
+  value: (tokens) -> { hours: tokens[0].value(), minutes: 0, seconds: 0, pmam: tokens[1].value() }
+
+class AtNumberTimeSpacePRule extends Rule
+  constructor: -> super [AtToken, Number2Token, PMAMToken]
+  value: (tokens) -> { hours: tokens[1].value(), minutes: 0, seconds: 0, pmam: tokens[2].value() }
+
 class TimePRule extends SingleTokenRule
   constructor: -> super TimePToken
   value: (tokens) ->
@@ -277,7 +289,10 @@ Rules = [
   MonthDayYearRule,
   WeekdayMonthDayYearRule,
   MonthDayRule,
-  WeekdayMonthDayRule
+  WeekdayMonthDayRule,
+  TimeSpacePRule,
+  NumberTimeSpacePRule,
+  AtNumberTimeSpacePRule
 ]
 
 # Date.coffee
@@ -347,6 +362,10 @@ class MonthNameToken extends AbbrevListToken
 #################
 # Static tokens #
 #################
+
+class PMAMToken extends AbstractToken
+  constructor: -> super /// pm|am ///
+  value: -> @match[0]
 
 class AtToken extends StaticToken
   constructor: -> super "at"
@@ -458,5 +477,6 @@ Tokens = [
   TimePToken,
   Number4Token,
   DateYYToken,
-  DateYYYYToken
+  DateYYYYToken,
+  PMAMToken
 ]

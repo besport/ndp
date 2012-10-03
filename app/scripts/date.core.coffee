@@ -26,7 +26,7 @@ pick = (token_list) ->
 apply = (info, date=new Date) ->
   # Apply static time information
   if "hours" of info
-    date.setHours info.hours + (if "pmam" of info and info.pmam == "p" then 12 else 0)
+    date.setHours info.hours + (if "pmam" of info and (info.pmam == "p" or info.pmam == "pm") and info.hours < 12 then 12 else 0)
 
   # Set minutes
   if "minutes" of info

@@ -66,6 +66,10 @@ class MonthNameToken extends AbbrevListToken
 # Static tokens #
 #################
 
+class PMAMToken extends AbstractToken
+  constructor: -> super /// pm|am ///
+  value: -> @match[0]
+
 class AtToken extends StaticToken
   constructor: -> super "at"
 
@@ -176,5 +180,6 @@ Tokens = [
   TimePToken,
   Number4Token,
   DateYYToken,
-  DateYYYYToken
+  DateYYYYToken,
+  PMAMToken
 ]
