@@ -128,6 +128,10 @@ class DateYYYYToken extends AbstractToken
   day: -> parseInt @match[2]
   year: -> parseInt @match[3]
 
+class DayNumberToken extends AbstractToken
+  constructor: -> super /// ([0-9]{1,2})(th|nd|rd|st) ///
+  value: -> parseInt @match[1]
+
 class Number2Token extends AbstractToken
   constructor: -> super /// [0-9]{1,2} ///
   value: -> parseInt @match[0]
@@ -160,26 +164,31 @@ to_token = (word) ->
 
   return null
 
+###################################
+# All the tokens used for parsing #
+###################################
+
 Tokens = [
-  DayNameToken,
-  MonthNameToken,
-  AtToken,
-  MonthToken,
-  WeekToken,
-  YearToken,
-  NoonToken,
-  MidnightToken,
-  LunchToken,
-  TodayToken,
-  TomorrowToken,
-  YesterdayToken,
-  NextLastToken,
-  Number2Token,
-  Number2PToken,
-  TimeToken,
-  TimePToken,
-  Number4Token,
-  DateYYToken,
-  DateYYYYToken,
-  PMAMToken
+  DayNameToken, # "monday"
+  MonthNameToken, # "january"
+  AtToken, # "at"
+  MonthToken, # "month"
+  WeekToken, # "week"
+  YearToken, # "year"
+  NoonToken, # "noon"
+  MidnightToken, # "midnight"
+  LunchToken, # "lunch"
+  TodayToken, # "today"
+  TomorrowToken, # "tomorrow"
+  YesterdayToken, # "yesterday"
+  NextLastToken, # "next|last"
+  DayNumberToken, # "28th"
+  Number2Token, # "28"
+  Number2PToken, # "28PM"
+  TimeToken, # "7:30"
+  TimePToken, # "7:30PM"
+  Number4Token, # "2012"
+  DateYYToken, # "8/25/12"
+  DateYYYYToken, # "8/25/2012"
+  PMAMToken # "pm|am"
 ]

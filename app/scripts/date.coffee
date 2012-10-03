@@ -159,6 +159,22 @@ class NextLastRule extends Rule
 #################
 # Grammar rules #
 #################
+#
+class WeekdayMonthDayOrdYearRule extends Rule
+  constructor: -> super [DayNameToken, MonthNameToken, DayNumberToken, Number4Token]
+  value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value(), year: tokens[3].value() }
+
+class MonthDayOrdYearRule extends Rule
+  constructor: -> super [MonthNameToken, DayNumberToken, Number4Token]
+  value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value(), year: tokens[2].value() }
+
+class WeekdayMonthDayOrdRule extends Rule
+  constructor: -> super [DayNameToken, MonthNameToken, DayNumberToken]
+  value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value() }
+
+class MonthDayOrdRule extends Rule
+  constructor: -> super [MonthNameToken, DayNumberToken]
+  value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value() }
 
 class WeekdayMonthDayYearRule extends Rule
   constructor: -> super [DayNameToken, MonthNameToken, Number2Token, Number4Token]
@@ -267,32 +283,48 @@ class TimePRule extends SingleTokenRule
 ##################################
 
 Rules = [
-  DayTokenRule,
-  MonthTokenRule,
-  TomorrowRule,
-  YesterdayRule,
-  TodayRule,
-  NextLastMonthRule,
-  NextLastYearRule,
-  NextLastDayRule,
-  NextLastWeekRule,
-  NumberAtRule,
-  NumberPRule,
-  NumberPRule,
-  TimeRule,
-  TimePRule,
-  LunchRule,
-  NoonRule,
-  MidnightRule,
-  DateYYTokenRule,
-  DateYYYYTokenRule,
-  MonthDayYearRule,
-  WeekdayMonthDayYearRule,
-  MonthDayRule,
-  WeekdayMonthDayRule,
-  TimeSpacePRule,
-  NumberTimeSpacePRule,
-  AtNumberTimeSpacePRule
+  # Basic rules
+  DayTokenRule, # "monday"
+  MonthTokenRule, # "january"
+  TomorrowRule, # "tomorrow"
+  YesterdayRule, # "yesterday"
+  TodayRule, # "today"
+
+  # Next/Last
+  NextLastMonthRule, # "next month"
+  NextLastYearRule, # "next year"
+  NextLastDayRule, # "next monday"
+  NextLastWeekRule, # "next week"
+
+  # Times #
+  NumberAtRule, # "at 7"
+  NumberPRule, # "7pm"
+  TimeRule, # "7:30"
+  TimePRule, # "7:30PM"
+  TimeSpacePRule, # "7:28 PM"
+  NumberTimeSpacePRule, # "7 PM"
+  AtNumberTimeSpacePRule, # "at 7 PM"
+
+  # Special times #
+  LunchRule, # "lunch"
+  NoonRule, # "noon"
+  MidnightRule, # "midnight"
+
+  # Slash dates
+  DateYYTokenRule, # "mm/dd/yy"
+  DateYYYYTokenRule, # "mm/dd/yyyy"
+
+  # Dates with numbers
+  MonthDayYearRule, # "january, 28, 2012"
+  WeekdayMonthDayYearRule, # "monday, january 28 2012"
+  MonthDayRule, # "january 28"
+  WeekdayMonthDayRule, # "monday, january 28"
+
+  # Dates with ordinals
+  MonthDayOrdYearRule, # "january, 28th 2012"
+  WeekdayMonthDayOrdYearRule, # "monday, january 28th 2012"
+  MonthDayOrdRule, # "january 28th"
+  WeekdayMonthDayOrdRule # "monday, january 28th"
 ]
 
 # Date.coffee
@@ -425,6 +457,10 @@ class DateYYYYToken extends AbstractToken
   day: -> parseInt @match[2]
   year: -> parseInt @match[3]
 
+class DayNumberToken extends AbstractToken
+  constructor: -> super /// ([0-9]{1,2})(th|nd|rd|st) ///
+  value: -> parseInt @match[1]
+
 class Number2Token extends AbstractToken
   constructor: -> super /// [0-9]{1,2} ///
   value: -> parseInt @match[0]
@@ -457,26 +493,31 @@ to_token = (word) ->
 
   return null
 
+###################################
+# All the tokens used for parsing #
+###################################
+
 Tokens = [
-  DayNameToken,
-  MonthNameToken,
-  AtToken,
-  MonthToken,
-  WeekToken,
-  YearToken,
-  NoonToken,
-  MidnightToken,
-  LunchToken,
-  TodayToken,
-  TomorrowToken,
-  YesterdayToken,
-  NextLastToken,
-  Number2Token,
-  Number2PToken,
-  TimeToken,
-  TimePToken,
-  Number4Token,
-  DateYYToken,
-  DateYYYYToken,
-  PMAMToken
+  DayNameToken, # "monday"
+  MonthNameToken, # "january"
+  AtToken, # "at"
+  MonthToken, # "month"
+  WeekToken, # "week"
+  YearToken, # "year"
+  NoonToken, # "noon"
+  MidnightToken, # "midnight"
+  LunchToken, # "lunch"
+  TodayToken, # "today"
+  TomorrowToken, # "tomorrow"
+  YesterdayToken, # "yesterday"
+  NextLastToken, # "next|last"
+  DayNumberToken, # "28th"
+  Number2Token, # "28"
+  Number2PToken, # "28PM"
+  TimeToken, # "7:30"
+  TimePToken, # "7:30PM"
+  Number4Token, # "2012"
+  DateYYToken, # "8/25/12"
+  DateYYYYToken, # "8/25/2012"
+  PMAMToken # "pm|am"
 ]
