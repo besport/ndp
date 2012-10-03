@@ -1,14 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="description" content=""/>
-		<meta name="keywords" content=""/>
-		<base href="" />
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <base href="" />
 
-		<link rel="stylesheet" href="styles/bootstrap.css" type="text/css" />
-		<script type="text/javascript" src="components/jquery/jquery.js"></script>
+    <link rel="stylesheet" href="styles/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="components/jquery/jquery.js"></script>
     <script type="text/javascript" src="scripts/date.js"></script>
 
     <script>
@@ -19,86 +19,90 @@
 
           if (processed == null) {
             $('#textanalysis').html ("<i>Nothing's there</i>");
-          } else {
+            } else {
             $('#textanalysis').html ("<i>" + processed.toString() + "</i>");
           }
         });
       });
     </script>
-	</head>
+  </head>
 
-	<body style="margin: 0 auto; width: 70%; min-width: 320px;">
-	<div class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">
-        NDP
-      </a>
-      <ul class="nav">
-        <li>
-          <a href="#">
-            Home
+  <body style="margin: 0 auto; width: 70%; min-width: 320px;">
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">
+            NDP
           </a>
-        </li>
-        <li>
-        </li>
-        <li>
-        </li>
-      </ul>
+          <ul class="nav">
+            <li>
+            <a href="#">
+              Home
+            </a>
+            </li>
+            <li>
+              <a href="https://github.com/besport/ndp" target="_blank">GitHub</a>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="hero-unit">
-  <div>
-    <h1>
-      Natural Date Processing
-    </h1>
-    <p>
-      Natural Date Processing is a small JavaScript library written in CoffeeScript,
-      that allows you to read the user input and guess when things will happen.
-    </p>
-  </div>
-  <a class="btn btn-primary" href="http://github.com/besport/ndp" target="_blank">
-    Learn more
-    <br>
-  </a>
-</div>
-<hr>
-<div class="span2">
-</div>
-<div class="well">
-  <div class="row">
-    <div class="span6">
-      Try typing something in the text field on the right.
+    <div class="hero-unit">
       <div>
-        Example:
-        <i>
-          &nbsp;"Let's have lunch next monday!"
-        </i>
-      </div>
-      <div class="span6 ds-component" data-componentid="gridcol67">
-      </div>
-      <div class="span6 ds-component" data-componentid="gridcol68">
-      </div>
-      <div class="span6">
-      </div>
-      <div class="span6">
-      </div>
-    </div>
-    <div class="span6">
-      <div class="control-group">
-        <input id="textinput1" name="textinput1" type="">
-      </div>
-      <div id="textanalysis">
+        <h1>
+          Natural Date Processing
+        </h1>
         <p>
-          <i>
-            Nothing found?
-          </i>
+        Natural Date Processing is a small JavaScript library written in CoffeeScript,
+        that allows you to read the user input and guess when things will happen.
         </p>
       </div>
+      <a class="btn btn-primary" href="http://github.com/besport/ndp" target="_blank">
+        Learn more
+        <br>
+      </a>
     </div>
-  </div>
-</div>	
-	</body>
+    <hr>
+    <div class="span2">
+    </div>
+    <div class="well">
+      <div class="row">
+        <div class="span6">
+          Try typing something in the text field on the right.
+          <div>
+            Example:
+            <i>
+              &nbsp;"Let's have lunch next monday!"
+            </i>
+          </div>
+          <div class="span6 ds-component" data-componentid="gridcol67">
+          </div>
+          <div class="span6 ds-component" data-componentid="gridcol68">
+          </div>
+          <div class="span6">
+          </div>
+          <div class="span6">
+          </div>
+        </div>
+        <div class="span6">
+          <div class="control-group">
+            <input id="textinput1" name="textinput1" type="">
+          </div>
+          <div id="textanalysis">
+            <p>
+            <i>
+              Nothing found?
+            </i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer style="text-align:center">By <a href="mailto:fx@besport.com">François-Xavier Thomas</a>, (c) 2012 <a href="http://www.besport.com">Be Sport</a></footer>
+  </body>
 </html>
 
