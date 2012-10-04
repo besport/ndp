@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <base href="" />
+
+    <link rel="stylesheet" href="styles/main.css" type="text/bootstrap.css" />
+    <script type="text/javascript" src="components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="scripts/7da6dee5.date.js"></script>
+
+    <script>
+      $(function() {
+        $('#textinput1').keyup (function(ev) {
+          var text = $(this).val();
+          var processed = Date.parse(text);
+
+          if (processed == null) {
+            $('#textanalysis').html ("<i style=\"color:red;\">I see nothing!</i>");
+            } else {
+            $('#textanalysis').html ("<i style=\"color:green;\">" + processed.toString() + "</i>");
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body style="margin: 0 auto; width: 70%; min-width: 320px;">
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">
+            NDP
+          </a>
+          <ul class="nav">
+            <li> <a href="http://www.besport.com/about" target="_blank">About us</a> </li>
+            <li> <a href="https://github.com/besport/ndp" target="_blank">GitHub</a> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="hero-unit">
+      <div>
+        <h1>
+          Natural Date Processing
+        </h1>
+        <p>
+        Natural Date Processing is a small library written in CoffeeScript,
+        allowing you to read user inputs and guess when things will happen.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="http://github.com/besport/ndp" target="_blank">
+        Learn more
+        <br>
+      </a>
+    </div>
+    <div class="well">
+      <div class="row">
+        <div class="span6">
+          Try typing something in the text field on the right.
+          <div>
+            Example: <i>"Let's have lunch next monday!"</i>
+          </div>
+          <div class="span6 ds-component" data-componentid="gridcol67">
+          </div>
+          <div class="span6 ds-component" data-componentid="gridcol68">
+          </div>
+          <div class="span6">
+          </div>
+          <div class="span6">
+          </div>
+        </div>
+        <div class="span6">
+          <div class="control-group">
+            <textarea style="width: 100%;" id="textinput1" name="textinput1" type=""></textarea>
+          </div>
+          <div id="textanalysis">
+            <i style="color: #bbb;">...waiting for input</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="well">
+      <div class="row">
+        <div class="span12">
+          <h2>Installation</h2>
+            <p>You can grab the <code>date.js</code> file at the root of the project, or compile it yourself.</p>
+
+          <h2>Usage</h2>
+            <p>Easy, one method and you're done : <code>Date.parse("why not next monday at 17 pm?")</code></p>
+
+          <h2>Compilation</h2>
+          <ul>
+            <li>If you have <a href="http://yeoman.io">Yeoman</a>, simply run <code>yeoman concat:coffee coffee:build</code> and grab the output file</li>
+            <li>If you don't have it, run <code>cat app/scripts/date.*.coffee | coffee -s -o . &gt; date.js</code>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <footer style="text-align:center;">By <a href="mailto:fx@besport.com">François-Xavier Thomas</a>, (c) 2012 <a href="http://www.besport.com">Be Sport</a></footer>
+  </body>
+</html>
+
