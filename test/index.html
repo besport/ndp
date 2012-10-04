@@ -81,6 +81,35 @@
           .to.equal (yesterday);
         });
 
+        it('should parse "morning"', function() {
+          expect    (parse("morning").getHours())
+          .to.equal (10);
+        });
+
+        it('should parse "breakfast"', function() {
+          expect    (parse("breakfast").getHours())
+          .to.equal (8);
+        });
+
+        it('should parse "brunch"', function() {
+          expect    (parse("brunch").getHours())
+          .to.equal (11);
+        });
+
+        it('should parse "afternoon"', function() {
+          expect    (parse("afternoon").getHours())
+          .to.equal (16);
+        });
+
+        it('should parse "dinner"', function() {
+          expect    (parse("dinner").getHours())
+          .to.equal (19);
+        });
+
+        it('should parse "evening"', function() {
+          expect    (parse("evening").getHours())
+          .to.equal (20);
+        });
       });
 
       describe('Simple times', function() {
@@ -95,7 +124,12 @@
         });
       });
 
-      describe('Next/Previous (Year, Month, Week)', function() {
+      describe('In A/Next/Previous (Year, Month, Week)', function() {
+        it('should parse "in a year"', function() {
+          expect    (parse("in a year"))
+          .to.equal (next_year);
+        });
+
         it('should parse "next year"', function() {
           expect    (parse("next year"))
           .to.equal (next_year);
@@ -106,6 +140,11 @@
           .to.equal (last_year);
         });
 
+        it('should parse "in a month"', function() {
+          expect    (parse("in a month"))
+          .to.equal (next_month);
+        });
+
         it('should parse "next month"', function() {
           expect    (parse("next month"))
           .to.equal (next_month);
@@ -114,6 +153,11 @@
         it('should parse "last month"', function() {
           expect    (parse("last month"))
           .to.equal (last_month);
+        });
+
+        it('should parse "in a week"', function() {
+          expect    (parse("in a week"))
+          .to.equal (next_week);
         });
 
         it('should parse "next week"', function() {
@@ -178,82 +222,127 @@
       });
 
       describe ('Time expressions', function() {
-        it('should parse 24-hour format times', function() {
-          expect (parse("today at 17:32")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 32 && d.getHours() == 17;
+        describe ('24-hour format times', function() {
+          it ('should parse "yesterday at 17:32"', function() {
+            var d = parse("yesterday at 17:32");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getMinutes()).to.equal(32);
+            expect (d.getHours()).to.equal(17);
           });
         });
 
-        it('should parse 12-hour format times (PM)', function() {
-          expect (parse("tomorrow at 7:32PM")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 32 && d.getHours() == 19;
-          }, parse("tomorrow at 7:32PM").toString());
+        describe ('12-hour format times (PM)', function() {
+          it ('should parse "yesterday at 7:32PM"', function() {
+            var d = parse("yesterday at 7:32PM");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getMinutes()).to.equal(32);
+            expect (d.getHours()).to.equal(19);
+          });
 
-          expect (parse("tomorrow at 7:32 PM")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 32 && d.getHours() == 19;
-          }, parse("tomorrow at 7:32 PM").toString());
+          it ('should parse "yesterday at 7:32 PM"', function() {
+            var d = parse("yesterday at 7:32PM");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getMinutes()).to.equal(32);
+            expect (d.getHours()).to.equal(19);
+          });
 
-          expect (parse("tomorrow at 7 PM")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 0 && d.getHours() == 19;
-          }, parse("tomorrow at 7 PM").toString());
+          it ('should parse "yesterday at 7 pm"', function() {
+            var d = parse("yesterday at 7 pm");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getHours()).to.equal(19);
+          });
+
+          it ('should parse "yesterday at 7p"', function() {
+            var d = parse("yesterday at 7p");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getHours()).to.equal(19);
+          });
         });
 
-        it('should parse 12-hour format times (AM)', function() {
-          expect (parse("yesterday at 7:32AM")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 32 && d.getHours() == 7;
+        describe ('12-hour format times (AM)', function() {
+          it ('should parse "yesterday at 7:32AM"', function() {
+            var d = parse("yesterday at 7:32AM");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getMinutes()).to.equal(32);
+            expect (d.getHours()).to.equal(7);
           });
 
-          expect (parse("yesterday at 7:32 AM")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 32 && d.getHours() == 7;
+          it ('should parse "yesterday at 7:32 AM"', function() {
+            var d = parse("yesterday at 7:32AM");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getMinutes()).to.equal(32);
+            expect (d.getHours()).to.equal(7);
           });
 
-          expect (parse("yesterday at 7 h")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 0 && d.getHours() == 7;
+          it ('should parse "yesterday at 7"', function() {
+            var d = parse("yesterday at 7");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getHours()).to.equal(7);
           });
 
-          expect (parse("yesterday at 7hr")).to.satisfy (function (d) {
-            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
-                   d.getMinutes() == 0 && d.getHours() == 7;
+          it ('should parse "yesterday at 7h"', function() {
+            var d = parse("yesterday at 7h");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getHours()).to.equal(7);
+          });
+
+          it ('should parse "yesterday at 7 hr"', function() {
+            var d = parse("yesterday at 7 hr");
+            expect (d.getFullYear()).to.equal(start_date.getFullYear());
+            expect (d.getMonth()).to.equal(start_date.getMonth());
+            expect (d.getHours()).to.equal(7);
           });
         });
       });
 
       describe ('Date expressions', function() {
         it('should parse "4/16/2015"', function() {
-          expect      (parse("4/16/2015"))
-          .to.satisfy (function(d) { return d.getDate() == 16 && d.getMonth() == 3 && d.getFullYear() == 2015; });
+          var d = parse("4/16/2015");
+          expect (d.getDate()).to.equal(16);
+          expect (d.getMonth()).to.equal(3);
+          expect (d.getFullYear()).to.equal(2015);
         });
 
         it('should parse "4.16.2015"', function() {
-          expect      (parse("4.16.2015"))
-          .to.satisfy (function(d) { return d.getDate() == 16 && d.getMonth() == 3 && d.getFullYear() == 2015; });
+          var d = parse("4.16.2015");
+          expect (d.getDate()).to.equal(16);
+          expect (d.getMonth()).to.equal(3);
+          expect (d.getFullYear()).to.equal(2015);
         });
 
         it('should parse "October 13"', function() {
-          expect      (parse("October 13"))
-          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9; });
+          var d = parse("October 13");
+          expect (d.getDate()).to.equal(13);
+          expect (d.getMonth()).to.equal(9);
         });
 
         it('should parse "Monday, October 13"', function() {
-          expect      (parse("Monday, October 13"))
-          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9; });
+          var d = parse("Monday, October 13");
+          expect (d.getDate()).to.equal(13);
+          expect (d.getMonth()).to.equal(9);
         });
 
         it('should parse "October 13, 2015"', function() {
-          expect      (parse("October 13, 2015"))
-          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9 && d.getFullYear() == 2015; });
+          var d = parse("October 13, 2015");
+          expect (d.getDate()).to.equal(13);
+          expect (d.getMonth()).to.equal(9);
+          expect (d.getFullYear()).to.equal(2015);
         });
 
         it('should parse "Monday, October 13, 2015"', function() {
-          expect      (parse("Monday, October 13, 2015"))
-          .to.satisfy (function(d) { return d.getDate() == 13 && d.getMonth() == 9 && d.getFullYear() == 2015; });
+          var d = parse("Monday, October 13, 2015");
+          expect (d.getDate()).to.equal(13);
+          expect (d.getMonth()).to.equal(9);
+          expect (d.getFullYear()).to.equal(2015);
         });
       });
 

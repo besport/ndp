@@ -1,5 +1,5 @@
 (function() {
-  var AbbrevListToken, AbstractToken, AtNumberTimeSpacePRule, AtToken, DateYYToken, DateYYTokenRule, DateYYYYToken, DateYYYYTokenRule, DayNameToken, DayNumberToken, DayTokenRule, InToken, LastToken, ListToken, LunchRule, LunchToken, MidnightRule, MidnightToken, MonthDayOrdRule, MonthDayOrdYearRule, MonthDayRule, MonthDayYearRule, MonthNameToken, MonthToken, MonthTokenRule, NextLastDayRule, NextLastMonthRule, NextLastRule, NextLastToken, NextLastWeekRule, NextLastWeekendRule, NextLastYearRule, NextToken, NoonRule, NoonToken, Number2PToken, Number2Token, Number4Token, NumberAtRule, NumberPRule, NumberTimeSpacePRule, PMAMToken, Rule, Rules, SingleTokenRule, StaticToken, TimePRule, TimePToken, TimeRule, TimeSpacePRule, TimeToken, TodayRule, TodayToken, Tokens, TomorrowRule, TomorrowToken, WeekToken, WeekdayMonthDayOrdRule, WeekdayMonthDayOrdYearRule, WeekdayMonthDayRule, WeekdayMonthDayYearRule, WeekendToken, YearToken, YesterdayRule, YesterdayToken, apply, pick, to_token,
+  var AToken, AbbrevListToken, AbstractToken, AfternoonRule, AfternoonToken, AtNumberTimeSpacePRule, AtToken, BreakfastRule, BreakfastToken, BrunchRule, BrunchToken, DateYYToken, DateYYTokenRule, DateYYYYToken, DateYYYYTokenRule, DayNameToken, DayNumberToken, DayTokenRule, DinnerRule, DinnerToken, EveningRule, EveningToken, InAMonthRule, InARule, InAWeekRule, InAYearRule, InToken, LastToken, ListToken, LunchRule, LunchToken, MidnightRule, MidnightToken, MonthDayOrdRule, MonthDayOrdYearRule, MonthDayRule, MonthDayYearRule, MonthNameToken, MonthToken, MonthTokenRule, MorningRule, MorningToken, NextLastDayRule, NextLastMonthRule, NextLastRule, NextLastToken, NextLastWeekRule, NextLastWeekendRule, NextLastYearRule, NextToken, NoonRule, NoonToken, Number2PToken, Number2Token, Number4Token, NumberAtRule, NumberPRule, NumberTimeSpacePRule, PMAMToken, Rule, Rules, SingleTokenRule, StaticToken, TimePRule, TimePToken, TimeRule, TimeSpacePRule, TimeToken, TodayRule, TodayToken, Tokens, TomorrowRule, TomorrowToken, WeekToken, WeekdayMonthDayOrdRule, WeekdayMonthDayOrdYearRule, WeekdayMonthDayRule, WeekdayMonthDayYearRule, WeekendToken, YearToken, YesterdayRule, YesterdayToken, apply, pick, to_token,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -199,6 +199,26 @@
     };
 
     return NextLastRule;
+
+  })(Rule);
+
+  InARule = (function(_super) {
+
+    __extends(InARule, _super);
+
+    function InARule(cls, property) {
+      this.property = property;
+      InARule.__super__.constructor.call(this, [InToken, AToken, cls]);
+    }
+
+    InARule.prototype.value = function(tokens) {
+      var r;
+      r = {};
+      r[this.property] = 1;
+      return r;
+    };
+
+    return InARule;
 
   })(Rule);
 
@@ -434,6 +454,126 @@
 
   })(SingleTokenRule);
 
+  MorningRule = (function(_super) {
+
+    __extends(MorningRule, _super);
+
+    function MorningRule() {
+      MorningRule.__super__.constructor.call(this, MorningToken);
+    }
+
+    MorningRule.prototype.value = function(tokens) {
+      return {
+        hours: 10,
+        minutes: 0,
+        seconds: 0
+      };
+    };
+
+    return MorningRule;
+
+  })(SingleTokenRule);
+
+  AfternoonRule = (function(_super) {
+
+    __extends(AfternoonRule, _super);
+
+    function AfternoonRule() {
+      AfternoonRule.__super__.constructor.call(this, AfternoonToken);
+    }
+
+    AfternoonRule.prototype.value = function(tokens) {
+      return {
+        hours: 16,
+        minutes: 0,
+        seconds: 0
+      };
+    };
+
+    return AfternoonRule;
+
+  })(SingleTokenRule);
+
+  DinnerRule = (function(_super) {
+
+    __extends(DinnerRule, _super);
+
+    function DinnerRule() {
+      DinnerRule.__super__.constructor.call(this, DinnerToken);
+    }
+
+    DinnerRule.prototype.value = function(tokens) {
+      return {
+        hours: 19,
+        minutes: 0,
+        seconds: 0
+      };
+    };
+
+    return DinnerRule;
+
+  })(SingleTokenRule);
+
+  EveningRule = (function(_super) {
+
+    __extends(EveningRule, _super);
+
+    function EveningRule() {
+      EveningRule.__super__.constructor.call(this, EveningToken);
+    }
+
+    EveningRule.prototype.value = function(tokens) {
+      return {
+        hours: 20,
+        minutes: 0,
+        seconds: 0
+      };
+    };
+
+    return EveningRule;
+
+  })(SingleTokenRule);
+
+  BreakfastRule = (function(_super) {
+
+    __extends(BreakfastRule, _super);
+
+    function BreakfastRule() {
+      BreakfastRule.__super__.constructor.call(this, BreakfastToken);
+    }
+
+    BreakfastRule.prototype.value = function(tokens) {
+      return {
+        hours: 8,
+        minutes: 0,
+        seconds: 0
+      };
+    };
+
+    return BreakfastRule;
+
+  })(SingleTokenRule);
+
+  BrunchRule = (function(_super) {
+
+    __extends(BrunchRule, _super);
+
+    function BrunchRule() {
+      BrunchRule.__super__.constructor.call(this, BrunchToken);
+    }
+
+    BrunchRule.prototype.value = function(tokens) {
+      return {
+        hours: 11,
+        minutes: 0,
+        seconds: 0
+      };
+    };
+
+    return BrunchRule;
+
+  })(SingleTokenRule);
+
   TomorrowRule = (function(_super) {
 
     __extends(TomorrowRule, _super);
@@ -547,6 +687,42 @@
     return MidnightRule;
 
   })(SingleTokenRule);
+
+  InAWeekRule = (function(_super) {
+
+    __extends(InAWeekRule, _super);
+
+    function InAWeekRule() {
+      InAWeekRule.__super__.constructor.call(this, WeekToken, "week_add");
+    }
+
+    return InAWeekRule;
+
+  })(InARule);
+
+  InAMonthRule = (function(_super) {
+
+    __extends(InAMonthRule, _super);
+
+    function InAMonthRule() {
+      InAMonthRule.__super__.constructor.call(this, MonthToken, "month_add");
+    }
+
+    return InAMonthRule;
+
+  })(InARule);
+
+  InAYearRule = (function(_super) {
+
+    __extends(InAYearRule, _super);
+
+    function InAYearRule() {
+      InAYearRule.__super__.constructor.call(this, YearToken, "year_add");
+    }
+
+    return InAYearRule;
+
+  })(InARule);
 
   NextLastWeekRule = (function(_super) {
 
@@ -769,7 +945,7 @@
 
   })(SingleTokenRule);
 
-  Rules = [DayTokenRule, MonthTokenRule, TomorrowRule, YesterdayRule, TodayRule, NextLastMonthRule, NextLastYearRule, NextLastDayRule, NextLastWeekRule, NextLastWeekendRule, NumberAtRule, NumberPRule, TimeRule, TimePRule, TimeSpacePRule, NumberTimeSpacePRule, AtNumberTimeSpacePRule, LunchRule, NoonRule, MidnightRule, DateYYTokenRule, DateYYYYTokenRule, MonthDayYearRule, WeekdayMonthDayYearRule, MonthDayRule, WeekdayMonthDayRule, MonthDayOrdYearRule, WeekdayMonthDayOrdYearRule, MonthDayOrdRule, WeekdayMonthDayOrdRule];
+  Rules = [DayTokenRule, MonthTokenRule, TomorrowRule, YesterdayRule, TodayRule, MorningRule, AfternoonRule, EveningRule, DinnerRule, BreakfastRule, BrunchRule, InAMonthRule, InAYearRule, InAWeekRule, NextLastMonthRule, NextLastYearRule, NextLastWeekRule, NextLastDayRule, NextLastWeekendRule, NumberAtRule, NumberPRule, TimeRule, TimePRule, TimeSpacePRule, NumberTimeSpacePRule, AtNumberTimeSpacePRule, LunchRule, NoonRule, MidnightRule, DateYYTokenRule, DateYYYYTokenRule, MonthDayYearRule, WeekdayMonthDayYearRule, MonthDayRule, WeekdayMonthDayRule, MonthDayOrdYearRule, WeekdayMonthDayOrdYearRule, MonthDayOrdRule, WeekdayMonthDayOrdRule];
 
   Date.Util = {
     Interval: {
@@ -895,6 +1071,18 @@
     }
 
     return InToken;
+
+  })(StaticToken);
+
+  AToken = (function(_super) {
+
+    __extends(AToken, _super);
+
+    function AToken() {
+      AToken.__super__.constructor.call(this, "a");
+    }
+
+    return AToken;
 
   })(StaticToken);
 
@@ -1043,6 +1231,78 @@
     }
 
     return YesterdayToken;
+
+  })(StaticToken);
+
+  MorningToken = (function(_super) {
+
+    __extends(MorningToken, _super);
+
+    function MorningToken() {
+      MorningToken.__super__.constructor.call(this, "morning");
+    }
+
+    return MorningToken;
+
+  })(StaticToken);
+
+  AfternoonToken = (function(_super) {
+
+    __extends(AfternoonToken, _super);
+
+    function AfternoonToken() {
+      AfternoonToken.__super__.constructor.call(this, "afternoon");
+    }
+
+    return AfternoonToken;
+
+  })(StaticToken);
+
+  EveningToken = (function(_super) {
+
+    __extends(EveningToken, _super);
+
+    function EveningToken() {
+      EveningToken.__super__.constructor.call(this, "evening");
+    }
+
+    return EveningToken;
+
+  })(StaticToken);
+
+  DinnerToken = (function(_super) {
+
+    __extends(DinnerToken, _super);
+
+    function DinnerToken() {
+      DinnerToken.__super__.constructor.call(this, "dinner");
+    }
+
+    return DinnerToken;
+
+  })(StaticToken);
+
+  BreakfastToken = (function(_super) {
+
+    __extends(BreakfastToken, _super);
+
+    function BreakfastToken() {
+      BreakfastToken.__super__.constructor.call(this, "breakfast");
+    }
+
+    return BreakfastToken;
+
+  })(StaticToken);
+
+  BrunchToken = (function(_super) {
+
+    __extends(BrunchToken, _super);
+
+    function BrunchToken() {
+      BrunchToken.__super__.constructor.call(this, "brunch");
+    }
+
+    return BrunchToken;
 
   })(StaticToken);
 
@@ -1272,6 +1532,6 @@
     return null;
   };
 
-  Tokens = [DayNameToken, MonthNameToken, AtToken, MonthToken, WeekToken, YearToken, NoonToken, MidnightToken, LunchToken, TodayToken, TomorrowToken, YesterdayToken, NextLastToken, DayNumberToken, Number2Token, Number2PToken, TimeToken, TimePToken, Number4Token, DateYYToken, DateYYYYToken, PMAMToken, InToken, WeekendToken];
+  Tokens = [DayNameToken, MonthNameToken, AtToken, MonthToken, WeekToken, YearToken, NoonToken, MidnightToken, LunchToken, TodayToken, TomorrowToken, YesterdayToken, NextLastToken, DayNumberToken, Number2Token, Number2PToken, TimeToken, TimePToken, Number4Token, DateYYToken, DateYYYYToken, PMAMToken, InToken, AToken, WeekendToken, MorningToken, AfternoonToken, EveningToken, DinnerToken, BreakfastToken, BrunchToken];
 
 }).call(this);

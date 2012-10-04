@@ -69,6 +69,9 @@ class MonthNameToken extends AbbrevListToken
 class InToken extends StaticToken
   constructor: -> super "in"
 
+class AToken extends StaticToken
+  constructor: -> super "a"
+
 class WeekendToken extends AbstractToken
   constructor: -> super /// (week-end|weekend)s? ///
 
@@ -105,6 +108,24 @@ class TomorrowToken extends StaticToken
 
 class YesterdayToken extends StaticToken
   constructor: -> super "yesterday"
+
+class MorningToken extends StaticToken
+  constructor: -> super "morning"
+
+class AfternoonToken extends StaticToken
+  constructor: -> super "afternoon"
+
+class EveningToken extends StaticToken
+  constructor: -> super "evening"
+
+class DinnerToken extends StaticToken
+  constructor: -> super "dinner"
+
+class BreakfastToken extends StaticToken
+  constructor: -> super "breakfast"
+
+class BrunchToken extends StaticToken
+  constructor: -> super "brunch"
 
 class NextToken extends StaticToken
   constructor: -> super "next"
@@ -198,5 +219,12 @@ Tokens = [
   DateYYYYToken, # "8/25/2012"
   PMAMToken, # "pm|am"
   InToken, # "in"
-  WeekendToken # "weekend"
+  AToken, # "a"
+  WeekendToken, # "weekend"
+  MorningToken, # "morning"
+  AfternoonToken, # "afternoon"
+  EveningToken, # "evening"
+  DinnerToken, # "dinner"
+  BreakfastToken, # "breakfast"
+  BrunchToken # "brunch"
 ]

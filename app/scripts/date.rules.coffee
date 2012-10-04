@@ -30,10 +30,17 @@ class NextLastRule extends Rule
     r[@property] = tokens[0].value()
     return r
 
+class InARule extends Rule
+  constructor: (cls, @property) -> super [InToken, AToken, cls]
+  value: (tokens) ->
+    r = {}
+    r[@property] = 1
+    return r
+
 #################
 # Grammar rules #
 #################
-#
+
 class WeekdayMonthDayOrdYearRule extends Rule
   constructor: -> super [DayNameToken, MonthNameToken, DayNumberToken, Number4Token]
   value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value(), year: tokens[3].value() }
@@ -82,6 +89,30 @@ class MonthTokenRule extends SingleTokenRule
   constructor: -> super MonthNameToken
   value: (tokens) -> { month: tokens[0].id() }
 
+class MorningRule extends SingleTokenRule
+  constructor: -> super MorningToken
+  value: (tokens) -> { hours: 10, minutes: 0, seconds: 0 }
+
+class AfternoonRule extends SingleTokenRule
+  constructor: -> super AfternoonToken
+  value: (tokens) -> { hours: 16, minutes: 0, seconds: 0 }
+
+class DinnerRule extends SingleTokenRule
+  constructor: -> super DinnerToken
+  value: (tokens) -> { hours: 19, minutes: 0, seconds: 0 }
+
+class EveningRule extends SingleTokenRule
+  constructor: -> super EveningToken
+  value: (tokens) -> { hours: 20, minutes: 0, seconds: 0 }
+
+class BreakfastRule extends SingleTokenRule
+  constructor: -> super BreakfastToken
+  value: (tokens) -> { hours: 8, minutes: 0, seconds: 0 }
+
+class BrunchRule extends SingleTokenRule
+  constructor: -> super BrunchToken
+  value: (tokens) -> { hours: 11, minutes: 0, seconds: 0 }
+
 class TomorrowRule extends SingleTokenRule
   constructor: -> super TomorrowToken
   value: (tokens) -> { day_add: +1 }
@@ -105,6 +136,15 @@ class LunchRule extends SingleTokenRule
 class MidnightRule extends SingleTokenRule
   constructor: -> super MidnightToken
   value: (tokens) -> { hours: 0, minutes: 0, seconds: 0 }
+
+class InAWeekRule extends InARule
+  constructor: -> super WeekToken,"week_add"
+
+class InAMonthRule extends InARule
+  constructor: -> super MonthToken,"month_add"
+
+class InAYearRule extends InARule
+  constructor: -> super YearToken,"year_add"
 
 class NextLastWeekRule extends NextLastRule
   constructor: -> super WeekToken,"week_add"
@@ -172,11 +212,22 @@ Rules = [
   YesterdayRule, # "yesterday"
   TodayRule, # "today"
 
+  # Other static things
+  MorningRule, # "morning"
+  AfternoonRule, # "afternoon"
+  EveningRule, # "evening"
+  DinnerRule, # "dinner"
+  BreakfastRule, # "breakfast"
+  BrunchRule, # "brunch"
+
   # Next/Last
+  InAMonthRule, # "next month"
+  InAYearRule, # "next year"
+  InAWeekRule, # "next week"
   NextLastMonthRule, # "next month"
   NextLastYearRule, # "next year"
-  NextLastDayRule, # "next monday"
   NextLastWeekRule, # "next week"
+  NextLastDayRule, # "next monday"
   NextLastWeekendRule, # "next week-end"
 
   # Times #
