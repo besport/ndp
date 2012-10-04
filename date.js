@@ -1,5 +1,5 @@
 (function() {
-  var AbbrevListToken, AbstractToken, AtNumberTimeSpacePRule, AtToken, DateYYToken, DateYYTokenRule, DateYYYYToken, DateYYYYTokenRule, DayNameToken, DayNumberToken, DayTokenRule, LastToken, ListToken, LunchRule, LunchToken, MidnightRule, MidnightToken, MonthDayOrdRule, MonthDayOrdYearRule, MonthDayRule, MonthDayYearRule, MonthNameToken, MonthToken, MonthTokenRule, NextLastDayRule, NextLastMonthRule, NextLastRule, NextLastToken, NextLastWeekRule, NextLastYearRule, NextToken, NoonRule, NoonToken, Number2PToken, Number2Token, Number4Token, NumberAtRule, NumberPRule, NumberTimeSpacePRule, PMAMToken, Rule, Rules, SingleTokenRule, StaticToken, TimePRule, TimePToken, TimeRule, TimeSpacePRule, TimeToken, TodayRule, TodayToken, Tokens, TomorrowRule, TomorrowToken, WeekToken, WeekdayMonthDayOrdRule, WeekdayMonthDayOrdYearRule, WeekdayMonthDayRule, WeekdayMonthDayYearRule, YearToken, YesterdayRule, YesterdayToken, apply, pick, to_token,
+  var AbbrevListToken, AbstractToken, AtNumberTimeSpacePRule, AtToken, DateYYToken, DateYYTokenRule, DateYYYYToken, DateYYYYTokenRule, DayNameToken, DayNumberToken, DayTokenRule, InToken, LastToken, ListToken, LunchRule, LunchToken, MidnightRule, MidnightToken, MonthDayOrdRule, MonthDayOrdYearRule, MonthDayRule, MonthDayYearRule, MonthNameToken, MonthToken, MonthTokenRule, NextLastDayRule, NextLastMonthRule, NextLastRule, NextLastToken, NextLastWeekRule, NextLastWeekendRule, NextLastYearRule, NextToken, NoonRule, NoonToken, Number2PToken, Number2Token, Number4Token, NumberAtRule, NumberPRule, NumberTimeSpacePRule, PMAMToken, Rule, Rules, SingleTokenRule, StaticToken, TimePRule, TimePToken, TimeRule, TimeSpacePRule, TimeToken, TodayRule, TodayToken, Tokens, TomorrowRule, TomorrowToken, WeekToken, WeekdayMonthDayOrdRule, WeekdayMonthDayOrdYearRule, WeekdayMonthDayRule, WeekdayMonthDayYearRule, WeekendToken, YearToken, YesterdayRule, YesterdayToken, apply, pick, to_token,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -604,6 +604,26 @@
 
   })(Rule);
 
+  NextLastWeekendRule = (function(_super) {
+
+    __extends(NextLastWeekendRule, _super);
+
+    function NextLastWeekendRule() {
+      NextLastWeekendRule.__super__.constructor.call(this, [NextLastToken, WeekendToken]);
+    }
+
+    NextLastWeekendRule.prototype.value = function(tokens) {
+      var r, v;
+      r = {};
+      v = tokens[0].value();
+      r[v < 0 ? "last_week_day" : "next_week_day"] = 6;
+      return r;
+    };
+
+    return NextLastWeekendRule;
+
+  })(Rule);
+
   NumberAtRule = (function(_super) {
 
     __extends(NumberAtRule, _super);
@@ -749,7 +769,7 @@
 
   })(SingleTokenRule);
 
-  Rules = [DayTokenRule, MonthTokenRule, TomorrowRule, YesterdayRule, TodayRule, NextLastMonthRule, NextLastYearRule, NextLastDayRule, NextLastWeekRule, NumberAtRule, NumberPRule, TimeRule, TimePRule, TimeSpacePRule, NumberTimeSpacePRule, AtNumberTimeSpacePRule, LunchRule, NoonRule, MidnightRule, DateYYTokenRule, DateYYYYTokenRule, MonthDayYearRule, WeekdayMonthDayYearRule, MonthDayRule, WeekdayMonthDayRule, MonthDayOrdYearRule, WeekdayMonthDayOrdYearRule, MonthDayOrdRule, WeekdayMonthDayOrdRule];
+  Rules = [DayTokenRule, MonthTokenRule, TomorrowRule, YesterdayRule, TodayRule, NextLastMonthRule, NextLastYearRule, NextLastDayRule, NextLastWeekRule, NextLastWeekendRule, NumberAtRule, NumberPRule, TimeRule, TimePRule, TimeSpacePRule, NumberTimeSpacePRule, AtNumberTimeSpacePRule, LunchRule, NoonRule, MidnightRule, DateYYTokenRule, DateYYYYTokenRule, MonthDayYearRule, WeekdayMonthDayYearRule, MonthDayRule, WeekdayMonthDayRule, MonthDayOrdYearRule, WeekdayMonthDayOrdYearRule, MonthDayOrdRule, WeekdayMonthDayOrdRule];
 
   Date.Util = {
     Interval: {
@@ -865,6 +885,30 @@
     return MonthNameToken;
 
   })(AbbrevListToken);
+
+  InToken = (function(_super) {
+
+    __extends(InToken, _super);
+
+    function InToken() {
+      InToken.__super__.constructor.call(this, "in");
+    }
+
+    return InToken;
+
+  })(StaticToken);
+
+  WeekendToken = (function(_super) {
+
+    __extends(WeekendToken, _super);
+
+    function WeekendToken() {
+      WeekendToken.__super__.constructor.call(this, /(week-end|weekend)s?/);
+    }
+
+    return WeekendToken;
+
+  })(AbstractToken);
 
   PMAMToken = (function(_super) {
 
@@ -1228,6 +1272,6 @@
     return null;
   };
 
-  Tokens = [DayNameToken, MonthNameToken, AtToken, MonthToken, WeekToken, YearToken, NoonToken, MidnightToken, LunchToken, TodayToken, TomorrowToken, YesterdayToken, NextLastToken, DayNumberToken, Number2Token, Number2PToken, TimeToken, TimePToken, Number4Token, DateYYToken, DateYYYYToken, PMAMToken];
+  Tokens = [DayNameToken, MonthNameToken, AtToken, MonthToken, WeekToken, YearToken, NoonToken, MidnightToken, LunchToken, TodayToken, TomorrowToken, YesterdayToken, NextLastToken, DayNumberToken, Number2Token, Number2PToken, TimeToken, TimePToken, Number4Token, DateYYToken, DateYYYYToken, PMAMToken, InToken, WeekendToken];
 
 }).call(this);

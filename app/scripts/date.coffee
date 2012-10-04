@@ -249,6 +249,14 @@ class NextLastDayRule extends Rule
     r[if v < 0 then "last_week_day" else "next_week_day"] = tokens[1].id()
     return r
 
+class NextLastWeekendRule extends Rule
+  constructor: -> super [NextLastToken, WeekendToken]
+  value: (tokens) ->
+    r = {}
+    v = tokens[0].value()
+    r[if v < 0 then "last_week_day" else "next_week_day"] = 6
+    return r
+
 class NumberAtRule extends Rule
   constructor: -> super [AtToken, Number2Token]
   value: (tokens) -> { hours: tokens[1].value(), minutes: 0, seconds: 0 }
@@ -295,6 +303,7 @@ Rules = [
   NextLastYearRule, # "next year"
   NextLastDayRule, # "next monday"
   NextLastWeekRule, # "next week"
+  NextLastWeekendRule, # "next week-end"
 
   # Times #
   NumberAtRule, # "at 7"
@@ -394,6 +403,12 @@ class MonthNameToken extends AbbrevListToken
 #################
 # Static tokens #
 #################
+
+class InToken extends StaticToken
+  constructor: -> super "in"
+
+class WeekendToken extends AbstractToken
+  constructor: -> super /// (week-end|weekend)s? ///
 
 class PMAMToken extends AbstractToken
   constructor: -> super /// pm|am ///
@@ -519,5 +534,7 @@ Tokens = [
   Number4Token, # "2012"
   DateYYToken, # "8/25/12"
   DateYYYYToken, # "8/25/2012"
-  PMAMToken # "pm|am"
+  PMAMToken, # "pm|am"
+  InToken, # "in"
+  WeekendToken # "weekend"
 ]

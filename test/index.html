@@ -47,6 +47,11 @@
     var next_week = new Date(start_time + T.Week);
     var last_week = new Date(start_time - T.Week);
 
+    var next_weekend = new Date(start_time + (6-start_date.getDay())*T.Day);
+    if (6 <= start_date.getDay()) next_weekend.setTime(next_weekend.getTime() + 7*T.Day);
+    var last_weekend = new Date(start_time + (6-start_date.getDay())*T.Day);
+    if (6 >= start_date.getDay()) last_weekend.setTime(last_weekend.getTime() - 7*T.Day);
+
     var next_monday_at_noon = new Date(start_time + (1-start_date.getDay())*T.Day);
     next_monday_at_noon.setHours(12);
     next_monday_at_noon.setMinutes(0);
@@ -119,6 +124,26 @@
         it('should parse "last week"', function() {
           expect    (parse("last week"))
           .to.equal (last_week);
+        });
+
+        it('should parse "last weekend"', function() {
+          expect    (parse("last weekend"))
+          .to.equal (last_weekend);
+        });
+
+        it('should parse "next weekend"', function() {
+          expect    (parse("next weekend"))
+          .to.equal (next_weekend);
+        });
+
+        it('should parse "last week-end"', function() {
+          expect    (parse("last week-end"))
+          .to.equal (last_weekend);
+        });
+
+        it('should parse "next weekend"', function() {
+          expect    (parse("next week-end"))
+          .to.equal (next_weekend);
         });
       });
 

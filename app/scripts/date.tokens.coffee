@@ -66,6 +66,12 @@ class MonthNameToken extends AbbrevListToken
 # Static tokens #
 #################
 
+class InToken extends StaticToken
+  constructor: -> super "in"
+
+class WeekendToken extends AbstractToken
+  constructor: -> super /// (week-end|weekend)s? ///
+
 class PMAMToken extends AbstractToken
   constructor: -> super /// pm|am ///
   value: -> @match[0]
@@ -190,5 +196,7 @@ Tokens = [
   Number4Token, # "2012"
   DateYYToken, # "8/25/12"
   DateYYYYToken, # "8/25/2012"
-  PMAMToken # "pm|am"
+  PMAMToken, # "pm|am"
+  InToken, # "in"
+  WeekendToken # "weekend"
 ]
