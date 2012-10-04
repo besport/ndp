@@ -5,12 +5,12 @@ Natural Date Processing is a small library written in CoffeeScript, allowing you
 Installation
 ============
 
-You can grab the date.js file at the root of the project, or compile it yourself.
+You can grab the `date.js` file at the root of the project, or compile it yourself.
 
 Usage
 =====
 
-Easy, one method and you're done : Date.parse("why not next monday at 17 pm?")
+Easy, one method and you're done : `Date.parse("why not next monday at 17 pm?")`
 
 Compilation
 ===========
