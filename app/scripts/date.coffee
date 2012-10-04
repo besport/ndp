@@ -171,6 +171,14 @@ class WeekdayMonthDayOrdYearRule extends Rule
   constructor: -> super [DayNameToken, MonthNameToken, DayNumberToken, Number4Token]
   value: (tokens) -> { month: tokens[1].id(), day: tokens[2].value(), year: tokens[3].value() }
 
+class TomorrowNightRule extends Rule
+  constructor: -> super [TomorrowToken, NightToken]
+  value: (tokens) -> { day_add: 1, hours: 20, minutes: 0, seconds: 0 }
+
+class TomorrowEveningRule extends Rule
+  constructor: -> super [TomorrowToken, EveningToken]
+  value: (tokens) -> { day_add: 1, hours: 20, minutes: 0, seconds: 0 }
+
 class MonthDayOrdYearRule extends Rule
   constructor: -> super [MonthNameToken, DayNumberToken, Number4Token]
   value: (tokens) -> { month: tokens[0].id(), day: tokens[1].value(), year: tokens[2].value() }
@@ -343,6 +351,8 @@ Rules = [
   TodayRule, # "today"
 
   # Other static things
+  TomorrowNightRule, # "tomorrow night"
+  TomorrowEveningRule, # "tomorrow evening"
   MorningRule, # "morning"
   AfternoonRule, # "afternoon"
   EveningRule, # "evening"
@@ -506,6 +516,9 @@ class YesterdayToken extends StaticToken
 class TonightToken extends StaticToken
   constructor: -> super "tonight"
 
+class NightToken extends StaticToken
+  constructor: -> super "night"
+
 class MorningToken extends StaticToken
   constructor: -> super "morning"
 
@@ -625,4 +638,5 @@ Tokens = [
   BreakfastToken, # "breakfast"
   BrunchToken, # "brunch"
   TonightToken, # "tonight"
+  NightToken, # "night"
 ]
