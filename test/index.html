@@ -213,7 +213,12 @@
                    d.getMinutes() == 32 && d.getHours() == 7;
           });
 
-          expect (parse("yesterday at 7 AM")).to.satisfy (function (d) {
+          expect (parse("yesterday at 7 h")).to.satisfy (function (d) {
+            return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
+                   d.getMinutes() == 0 && d.getHours() == 7;
+          });
+
+          expect (parse("yesterday at 7hr")).to.satisfy (function (d) {
             return d.getMonth() == start_date.getMonth() && d.getFullYear() == start_date.getFullYear() &&
                    d.getMinutes() == 0 && d.getHours() == 7;
           });

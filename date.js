@@ -915,7 +915,7 @@
     __extends(PMAMToken, _super);
 
     function PMAMToken() {
-      PMAMToken.__super__.constructor.call(this, /pm|am/);
+      PMAMToken.__super__.constructor.call(this, /pm|am|hr?s?/);
     }
 
     PMAMToken.prototype.value = function() {
@@ -1185,7 +1185,7 @@
     __extends(Number2PToken, _super);
 
     function Number2PToken() {
-      Number2PToken.__super__.constructor.call(this, /([0-9]{1,2})(p|a)m?/);
+      Number2PToken.__super__.constructor.call(this, /([0-9]{1,2})(pm?|am?|hr?s?)/);
     }
 
     Number2PToken.prototype.value = function() {
@@ -1225,7 +1225,7 @@
     __extends(TimePToken, _super);
 
     function TimePToken() {
-      TimePToken.__super__.constructor.call(this, /([0-9]{1,2}):([0-9]{2})(p|a)m?/);
+      TimePToken.__super__.constructor.call(this, /([0-9]{1,2}):([0-9]{2})(pm?|am?|hr?s?)/);
     }
 
     TimePToken.prototype.hours = function() {

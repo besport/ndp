@@ -73,7 +73,7 @@ class WeekendToken extends AbstractToken
   constructor: -> super /// (week-end|weekend)s? ///
 
 class PMAMToken extends AbstractToken
-  constructor: -> super /// pm|am ///
+  constructor: -> super /// pm|am|hr?s? ///
   value: -> @match[0]
 
 class AtToken extends StaticToken
@@ -143,7 +143,7 @@ class Number2Token extends AbstractToken
   value: -> parseInt @match[0]
 
 class Number2PToken extends AbstractToken
-  constructor: -> super /// ([0-9]{1,2})(p|a)m? ///
+  constructor: -> super /// ([0-9]{1,2})(pm?|am?|hr?s?) ///
   value: -> parseInt @match[1]
   pmam: -> @match[2]
 
@@ -153,7 +153,7 @@ class TimeToken extends AbstractToken
   minutes: -> parseInt @match[2]
 
 class TimePToken extends AbstractToken
-  constructor: -> super /// ([0-9]{1,2}):([0-9]{2})(p|a)m? ///
+  constructor: -> super /// ([0-9]{1,2}):([0-9]{2})(pm?|am?|hr?s?) ///
   hours: -> parseInt @match[1]
   minutes: -> parseInt @match[2]
   pmam: -> @match[3]
