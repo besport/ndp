@@ -2,6 +2,11 @@ Natural Date Processing
 =======================
 Natural Date Processing is a small library written in CoffeeScript, allowing you to read user inputs and guess when things will happen.
 
+Try it now!
+===========
+
+Go to http://besport.github.com/ndp/ and see for yourself!
+
 Installation
 ============
 
