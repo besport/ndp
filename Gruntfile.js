@@ -20,7 +20,8 @@ module.exports = function( grunt ) {
       coffee: {
         src: 'app/scripts/date.*.coffee',
         dest: 'app/scripts/date.coffee'
-      }
+      },
+      dist: ''
     },
 
     // Coffee to JS compilation
@@ -149,7 +150,7 @@ module.exports = function( grunt ) {
     // versioning
     rev: {
       js: 'scripts/**/*.js',
-      css: 'styles/**/*.css',
+      //css: 'styles/**/*.css',
       img: 'images/**'
     },
 
