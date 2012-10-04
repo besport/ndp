@@ -18,9 +18,9 @@
           var processed = Date.parse(text);
 
           if (processed == null) {
-            $('#textanalysis').html ("<i>Nothing's there</i>");
+            $('#textanalysis').html ("<i style=\"color:red;\">I see nothing!</i>");
             } else {
-            $('#textanalysis').html ("<i>" + processed.toString() + "</i>");
+            $('#textanalysis').html ("<i style=\"color:green;\">" + processed.toString() + "</i>");
           }
         });
       });
@@ -74,10 +74,10 @@
         </div>
         <div class="span6">
           <div class="control-group">
-            <input id="textinput1" name="textinput1" type="">
+            <textarea style="width: 100%;" id="textinput1" name="textinput1" type=""></textarea>
           </div>
           <div id="textanalysis">
-            <p><i>Nothing found?</i></p>
+            <i style="color: #bbb;">...waiting for input</i>
           </div>
         </div>
       </div>

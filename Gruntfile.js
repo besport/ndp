@@ -69,7 +69,7 @@ module.exports = function( grunt ) {
     watch: {
       concat: {
         files: 'app/scripts/date.*.coffee',
-        tasks: 'concat'
+        tasks: 'concat reload'
       },
       coffee: {
         files: ['app/scripts/**/*.coffee', 'temp/scripts/date.coffee'],
