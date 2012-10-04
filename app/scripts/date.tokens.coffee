@@ -109,6 +109,9 @@ class TomorrowToken extends StaticToken
 class YesterdayToken extends StaticToken
   constructor: -> super "yesterday"
 
+class TonightToken extends StaticToken
+  constructor: -> super "tonight"
+
 class MorningToken extends StaticToken
   constructor: -> super "morning"
 
@@ -226,5 +229,6 @@ Tokens = [
   EveningToken, # "evening"
   DinnerToken, # "dinner"
   BreakfastToken, # "breakfast"
-  BrunchToken # "brunch"
+  BrunchToken, # "brunch"
+  TonightToken, # "tonight"
 ]

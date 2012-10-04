@@ -137,6 +137,10 @@ class MidnightRule extends SingleTokenRule
   constructor: -> super MidnightToken
   value: (tokens) -> { hours: 0, minutes: 0, seconds: 0 }
 
+class TonightRule extends SingleTokenRule
+  constructor: -> super TonightToken
+  value: (tokens) -> { hours: 20, minutes: 0, seconds: 0, day: (new Date).getDate(), month: (new Date).getMonth(), year: (new Date).getFullYear() }
+
 class InAWeekRule extends InARule
   constructor: -> super WeekToken,"week_add"
 
@@ -216,6 +220,7 @@ Rules = [
   MorningRule, # "morning"
   AfternoonRule, # "afternoon"
   EveningRule, # "evening"
+  TonightRule, # "tonight"
   DinnerRule, # "dinner"
   BreakfastRule, # "breakfast"
   BrunchRule, # "brunch"
